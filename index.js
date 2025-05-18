@@ -7,7 +7,10 @@ import sapRoutes from './routes/sapRoutes.js';
 dotenv.config();
 
 const app = express();
-
+app.use('/', (req, res, next) => {
+  console.log('Radi server!');
+  next()
+});
 const allowedOrigins = ['http://ems.local', 'http://ems.rs'];
 app.use(cors({
   origin: (origin, callback) => {
