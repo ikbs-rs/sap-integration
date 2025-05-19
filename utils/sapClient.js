@@ -7,16 +7,18 @@ export const fetchSapSessionAndToken = async (username, password) => {
   const sapUsername = username;
   const sapPassword = password;
 
-// console.log("Dosao u SAP client", sapUrl, sapUsername, sapPassword)
+// console.log("Dosao u SAP client")
   const initial = await axios.get(sapUrl, {
     auth: { username: sapUsername, password: sapPassword },
     // verify: false,
     withCredentials: true
   });
+// console.log("Prosao initial ")
 
   const setCookieHeader = initial.headers['set-cookie'];
   const sessionCookie = setCookieHeader.find(cookie => cookie.includes('SAP_SESSIONID'));
 
+  // console.log("Ponovo prozivam sa SAP_SESSIONID ", sessionCookie)
   const csrf = await axios.get(sapUrl, {
     headers: {
       'X-CSRF-Token': 'Fetch',
@@ -24,7 +26,7 @@ export const fetchSapSessionAndToken = async (username, password) => {
     },
     withCredentials: true
   });
-// console.log("Dohvatio csrf ", csrf)
+
   return {
     csrfToken: csrf.headers['x-csrf-token'],
     sessionCookie

@@ -12,4 +12,13 @@ const pool = new Pool({
   max: 10,
 });
 
+pool.connect((err, client, release) => {
+  if (err) {
+      console.error('Error acquiring client', err.stack)
+  } else {
+      console.log('Connection established');
+  }
+  release();
+});
+
 export default pool;

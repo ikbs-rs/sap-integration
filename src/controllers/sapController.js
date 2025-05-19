@@ -13,16 +13,16 @@ export const getSapSessionAndToken = async (req, res) => {
       const sapData = await fetchSapSessionAndToken(username, password);
       csrfToken = sapData.csrfToken;
       sessionCookie = sapData.sessionCookie;
+      res.json({ csrfToken, sessionCookie });
 
-      // Re-generiši JWT sa dodatim SAP tokenima
-      const updatedToken = jwt.sign(
-        { username, password, csrfToken, sessionCookie },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h' }
-      );
-
-      // Vrati novi token klijentu
-      res.json({ updatedToken, csrfToken });
+      // console.log(csrfToken, "333333333333333333333333333333333333333333333333", sessionCookie) 
+      // const updatedToken = jwt.sign(
+      //   { username, password, csrfToken, sessionCookie },
+      //   process.env.JWT_SECRET,
+      //   { expiresIn: '1h' }
+      // );
+      // console.log(csrfToken, "4444444444444444444444444444444444444444444444444444", sessionCookie) 
+      // res.json({  csrfToken, sessionCookie, updatedToken });
     } else {
       // Token već ima CSRF i cookie — koristi ih
       res.json({ csrfToken, sessionCookie });

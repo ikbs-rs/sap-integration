@@ -7,15 +7,18 @@ import sapRoutes from './src/routes/sapRoutes.js';
 dotenv.config();
 
 const app = express();
-app.use('/', (req, res, next) => {
-  console.log('Radi server!');
-  next()
-});
-const allowedOrigins = ['http://ems.local', 'http://ems.rs'];
+// app.use('/', (req, res, next) => {
+//   console.log('Radi server!');
+//   next()
+// });
+const allowedOrigins = ['http://ems.local', 'http://ems.rs', 'http://localhost:5173'];
+
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) callback(null, true);
-    else callback(new Error('CORS nije dozvoljen'));
+    if (origin && !allowedOrigins.includes(origin)) {
+      console.warn(`⚠️ Nepoznat origin: ${origin}`);
+    }
+    callback(null, true); // ipak pusti sve
   },
   credentials: true
 }));
