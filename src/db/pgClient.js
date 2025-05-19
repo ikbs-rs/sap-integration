@@ -9,7 +9,7 @@ const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  max: 10,
+  // max: 10,
 });
 
 pool.connect((err, client, release) => {
