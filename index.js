@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 // app.use('/', (req, res, next) => {
-//   console.log('Radi server!');
+//   console.log('Radi server!', req.headers);
 //   next()
 // });
 const allowedOrigins = ['http://ems.local', 'http://ems.rs', 'http://localhost:5173'];

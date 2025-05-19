@@ -5,16 +5,16 @@ import { callSapService } from '../utils/sapTokenClient.js';
 
 const router = express.Router();
 
-// router.use('/', (req, res, next) => {
-//     console.log('SAP endpoint radi!', req.headers.authorization);
-//     next()
-// });
+router.use('/', (req, res, next) => {
+    console.log('SAP endpoint radi!', req.url);
+    next()
+});
 
-router.post('/call-sap', async (req, res) => {
-    const jwtUser = req.body.jwtUser;
-    const username = req.body.sapUsername;
-    const password = req.body.sapPassword;
-  
+router.post('/call-sap', verifyToken, async (req, res) => {
+    const jwtUser = req.user.username;
+    const username = req.user.username;
+    const password = req.user.password;
+    console.log('SAP call-sap radi!', req.user);
     try {
       const data = await callSapService(jwtUser, username, password);
       res.json(data);

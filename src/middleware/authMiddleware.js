@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export const verifyToken = (req, res, next) => {
+  // console.log("2222222222222222222222222222222222", req.headers);
   const authHeader = req.headers.authorization;
   if (!authHeader)
     return res.status(401).json({ message: "Token nije prosleđen" });
