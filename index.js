@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import userRoutes from './routes/userRoutes.js';
-import sapRoutes from './routes/sapRoutes.js';
+import userRoutes from './src/routes/userRoutes.js';
+import sapRoutes from './src/routes/sapRoutes.js';
 
 dotenv.config();
 
