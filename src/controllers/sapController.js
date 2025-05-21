@@ -11,8 +11,10 @@ export const getSapSessionAndToken = async (req, res) => {
 
     if (!csrfToken || !sessionCookie) {
       const sapData = await fetchSapSessionAndToken(username, password);
+      
       csrfToken = sapData.csrfToken;
       sessionCookie = sapData.sessionCookie;
+      console.log(sapData, '******************************+++++*****************************', {csrfToken, sessionCookie })
       res.json({ csrfToken, sessionCookie });
 
       // console.log(csrfToken, "333333333333333333333333333333333333333333333333", sessionCookie) 
