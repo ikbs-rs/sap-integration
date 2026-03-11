@@ -13,7 +13,8 @@ const extractFullSessionCookie = (cookieString) => {
 
 export const fetchSapSessionAndToken = async (username, password) => {
   // const sapUrl = `http://emd-s4h.ems.local:8001/sap/bc/zhr_pa2001?sap-client=100`;
-  const sapUrl = `${process.env.SAP_WS}/zhr_pa2001?sap-client=${process.env.SAP_CLIENT}`;
+  // const sapUrl = `${process.env.SAP_WS}/zhr_pa2001?sap-client=${process.env.SAP_CLIENT}`;
+  const sapUrl = 'http://emd-s4h.ems.local:8001/ems/ws/Z_2tokens?sap-client=100';
   const sapUsername = username;
   const sapPassword = password;
 
@@ -23,6 +24,8 @@ console.log("Dosao u SAP client", sapUrl, sapUsername, sapPassword)
     // verify: false,
     withCredentials: true
   });
+
+  console.log("Odgovor od token servisa", initial.headers)
 
   const setCookieHeader = initial.headers['set-cookie'];
   const sessionCookie = setCookieHeader.find(cookie => cookie.includes('SAP_SESSIONID'));
@@ -48,20 +51,19 @@ console.log("Dosao u SAP client", sapUrl, sapUsername, sapPassword)
 
 // console.log("Dohvatio prviKorak ******", prviKorak.prviKorak)
 
-  const x_csrf_token = csrf.headers['x_csrf_token']
-console.log("Dodao dao poziva Delete")
-  const prazanWS1 = await axios.delete('http://emd-s4h.ems.local:8001/ems/hr/pt_seniority', {
-    headers: {
-      'x_csrf_token': x_csrf_token,
-      'Content-Type': 'application/json',
-      'Cookie': sessionCookieHeder
-    },
-    withCredentials: true
-  });  
-console.log("+++++++++++++++++++++++++", prazanWS1.data)
+//   const x_csrf_token = csrf.headers['x_csrf_token']
+// console.log("Dodao dao poziva Delete")
+//   const prazanWS1 = await axios.delete('http://emd-s4h.ems.local:8001/ems/hr/pt_seniority', {
+//     headers: {
+//       'x_csrf_token': x_csrf_token,
+//       'Content-Type': 'application/json',
+//       'Cookie': sessionCookieHeder
+//     },
+//     withCredentials: true
+//   });  
+// console.log("+++++++++++++++++++++++++", prazanWS1.data)
   return {
     csrfToken: csrf.headers['x_csrf_token'],
-    sessionCookie: sessionCookieHeder,
-    prezanWS: prazanWS1.data
+    sessionCookie: sessionCookieHeder
   };
 };
